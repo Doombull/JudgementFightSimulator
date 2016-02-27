@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JudgementFightSimulator", "JudgementFightSimulator\JudgementFightSimulator.csproj", "{A6D49217-572C-4222-8367-79C106CB94C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferrous.Dice", "Ferrous.Dice\Ferrous.Dice.csproj", "{17C0A290-E7EC-4B26-BE50-3FAA0685BCCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferrous.JudgementFightSimulator", "Ferrous.JudgementFightSimulator\Ferrous.JudgementFightSimulator.csproj", "{D541278B-AD93-4257-B452-9818F86FBACF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A6D49217-572C-4222-8367-79C106CB94C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6D49217-572C-4222-8367-79C106CB94C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6D49217-572C-4222-8367-79C106CB94C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6D49217-572C-4222-8367-79C106CB94C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17C0A290-E7EC-4B26-BE50-3FAA0685BCCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17C0A290-E7EC-4B26-BE50-3FAA0685BCCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17C0A290-E7EC-4B26-BE50-3FAA0685BCCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17C0A290-E7EC-4B26-BE50-3FAA0685BCCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D541278B-AD93-4257-B452-9818F86FBACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D541278B-AD93-4257-B452-9818F86FBACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D541278B-AD93-4257-B452-9818F86FBACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D541278B-AD93-4257-B452-9818F86FBACF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

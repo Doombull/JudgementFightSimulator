@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JudgementFightSimulator
+namespace Ferrous.JudgementFightSimulator
 {
-    class Program
+    public enum Effect
     {
-        static void Main(string[] args)
-        {
-        }
+        Blind,
+        Fire,
+        Poison,
+        Stun
     }
 }

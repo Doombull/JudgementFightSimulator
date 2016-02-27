@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("JudgementFightSimulator")]
+[assembly: AssemblyTitle("Ferrous.Dice")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("JudgementFightSimulator")]
+[assembly: AssemblyProduct("Ferrous.Dice")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a6d49217-572c-4222-8367-79c106cb94c8")]
+[assembly: Guid("17c0a290-e7ec-4b26-be50-3faa0685bccb")]
 
 // Version information for an assembly consists of the following four values:
 //
