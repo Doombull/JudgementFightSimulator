@@ -5,42 +5,44 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Ferrous.Dice;
+using Ferrous.JudgementFightSimulator.Characters;
 
 namespace Ferrous.JudgementFightSimulator
 {
     public static class Rules
     {
-        public static AttackResult CalculateAttackRoll(int attackerAbility, int targetAgility)
+        public static AttackResult CalculateAttackRoll(int attackerAbility, Character target)
         {
-            return (AttackResult)DiceRoller.RollAtLeast(DiceShape.D10, targetAgility - attackerAbility, 3);
+            var hits = DiceRoller.RollAtLeast(DiceShape.D10, target.Agility - attackerAbility, 3);
+            return (AttackResult)Math.Max(hits - target.HitDefence, 0);
         }
 
-        public static int CalculateAttackDamage(AttackResult attackResult, int targetResilience, DiceShape dice, int glancingModifier, int solidModifier, int critModifier)
+        public static int CalculateAttackDamage(AttackResult attackResult, int targetResilience, int baseDamage, int solidModifier, int critModifier)
         {
             var damage = 0;
 
             switch (attackResult)
             {
                 case AttackResult.Glancing:
-                    damage = DiceRoller.Roll(dice) + glancingModifier;
+                    damage = baseDamage;
                     break;
 
                 case AttackResult.Solid:
-                    damage = DiceRoller.Roll(dice) + solidModifier;
+                    damage = baseDamage + solidModifier;
                     break;
 
                 case AttackResult.Critical:
-                    damage = DiceRoller.Roll(dice) + critModifier;
+                    damage = baseDamage + critModifier;
                     break;
             }
 
             return Math.Max(damage - targetResilience, 0);
         }
 
-        public static int CalculateAttackDamage(int attackerAbility, int targetAgility, int targetResilience, DiceShape dice, int glancingModifier, int solidModifier, int critModifier)
+        public static int CalculateAttackDamage(int attackerAbility, Character target, int baseDamage, int solidModifier, int critModifier)
         {
-            var attackResult = CalculateAttackRoll(attackerAbility, targetAgility);
-            return CalculateAttackDamage(attackResult, targetResilience, dice, glancingModifier, solidModifier, critModifier);
+            var attackResult = CalculateAttackRoll(attackerAbility, target);
+            return CalculateAttackDamage(attackResult, target.Resilience, baseDamage, solidModifier, critModifier);
         }
     }
 }

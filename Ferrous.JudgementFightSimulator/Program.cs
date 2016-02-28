@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Ferrous;
+
+using Ferrous.JudgementFightSimulator.Characters;
 
 namespace Ferrous.JudgementFightSimulator
 {
@@ -13,33 +16,37 @@ namespace Ferrous.JudgementFightSimulator
         {
             int maxFights = 10000;
 
-            //Archer fight archer
-            Characters.Character fighter = new Characters.A1ElfArcher();
+            using (XmlWriter writer = XmlWriter.Create(@"D:\Judgement.xml"))
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement("Results");
+                writer.WriteAttributeString("Date", DateTime.Now.ToString());
 
-            var result = 0.0;
-            for (var fightCount = 0; fightCount < maxFights; fightCount++)
-                result += fighter.Fight(new Characters.A1ElfArcher());
+                foreach (Character protagonist in CharacterList.Get())
+                {
+                    writer.WriteStartElement("Character");
+                    writer.WriteAttributeString("Name", protagonist.Name);
 
-            Console.WriteLine("Archer v Archer: " + result / maxFights);
+                    foreach (Character opponent in CharacterList.Get())
+                    {
+                        var result = 0.0;
+                        for (var fightCount = 0; fightCount < maxFights; fightCount++)
+                            result += protagonist.Fight(opponent);
 
-            result = 0.0;
-            for (var fightCount = 0; fightCount < maxFights; fightCount++)
-                result += fighter.Fight(new Characters.A2HumanBarbarian());
+                        Console.WriteLine(String.Format("{0} v {1}: {2}", protagonist.Name, opponent.Name, result / maxFights));
 
-            Console.WriteLine("Archer v Barbarian: " + result / maxFights);
+                        writer.WriteStartElement("Result");
+                        writer.WriteAttributeString("Name", opponent.Name);
+                        writer.WriteValue(String.Format("{0:n2}", result / maxFights));
+                        writer.WriteEndElement();
+                    }
 
-            fighter = new Characters.A2HumanBarbarian();
-            result = 0.0;
-            for (var fightCount = 0; fightCount < maxFights; fightCount++)
-                result += fighter.Fight(new Characters.A1ElfArcher());
+                    writer.WriteEndElement();
+                }
 
-            Console.WriteLine("Barbarian v Archer: " + result / maxFights);
-
-            result = 0.0;
-            for (var fightCount = 0; fightCount < maxFights; fightCount++)
-                result += fighter.Fight(new Characters.A2HumanBarbarian());
-
-            Console.WriteLine("Barbarian v Barbarian: " + result / maxFights);
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+            }
 
             Console.Read();
         }

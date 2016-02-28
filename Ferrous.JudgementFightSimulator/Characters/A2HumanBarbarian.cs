@@ -12,7 +12,7 @@ namespace Ferrous.JudgementFightSimulator.Characters
     {
         public A2HumanBarbarian()
         {
-            Name = "A2 - Human Barbarianr";
+            Name = "A2 - Human Barbarian";
             Health = 16;
             Actions = 3;
             Might = 7;
@@ -41,11 +41,11 @@ namespace Ferrous.JudgementFightSimulator.Characters
 
                 actionsRemaining--;
 
-                var attack = Rules.CalculateAttackRoll(Might + chargeBonus, opponant.Agility);
+                var attack = Rules.CalculateAttackRoll(Might + chargeBonus, opponant);
                 if (attack == AttackResult.Critical)
                     rage += 1;
 
-                damageCaused += Rules.CalculateAttackDamage(attack, opponant.Resilience, DiceShape.D6, 0, 1, 2);
+                damageCaused += Rules.CalculateAttackDamage(attack, opponant.Resilience, DiceRoller.Roll(DiceShape.D6), 1, 2);
             }
 
             damageCaused += DiceRoller.Roll(DiceShape.D6, rage);

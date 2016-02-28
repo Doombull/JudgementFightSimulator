@@ -17,6 +17,9 @@ namespace Ferrous.JudgementFightSimulator.Characters
         public int Agility { get; set; }
         public int Resilience { get; set; }
 
+        public int AccuracyDefence { get; set; }
+        public int HitDefence { get; set; }
+
         public List<Effect> Effects = new List<Effect>();
 
         public abstract double Fight(Character opponant);

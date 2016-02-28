@@ -8,37 +8,41 @@ using Ferrous.Dice;
 
 namespace Ferrous.JudgementFightSimulator.Characters
 {
-    public class A1ElfArcher : Character
+    public class D1DwarfKingsGuard : Character
     {
-        public A1ElfArcher()
+        public D1DwarfKingsGuard()
         {
-            Name = "A1 - Elf Archer";
-            Health = 15;
-            Actions = 4;
-            Might = 5;
-            Accuracy = 5;
-            Agility = 12;
-            Resilience = 0;
+            Name = "D1 - Dwarf Kings Guard";
+            Health = 18;
+            Actions = 3;
+            Might = 7;
+            Agility = 9;
+            Resilience = 2;
+
+            HitDefence = 1;
         }
 
         public override double Fight(Character opponant)
         {
             var damageCaused = 0;
-            var mageHunterDamage = (opponant.Magic > 0) ? 2 : 0;
-            var aimingBonus = 1;
 
             var actionsRemaining = Actions;
             while (actionsRemaining > 0)
             {
-                actionsRemaining--;
+                if (actionsRemaining <= 1)
+                    break;
+
+                actionsRemaining -= 2;
 
                 damageCaused += Rules.CalculateAttackDamage(
-                    Accuracy + aimingBonus - opponant.AccuracyDefence,
+                    Might,
                     opponant,
-                    DiceRoller.Roll(DiceShape.D4) + mageHunterDamage,
+                    DiceRoller.Roll(DiceShape.D4, 2) + 1,
                     1,
                     2);
             }
+
+            damageCaused += DiceRoller.Roll(DiceShape.D4, 2) + 2;
 
             return (double)damageCaused / opponant.Health * 100;
         }

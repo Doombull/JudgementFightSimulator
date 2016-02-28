@@ -8,24 +8,21 @@ using Ferrous.Dice;
 
 namespace Ferrous.JudgementFightSimulator.Characters
 {
-    public class A1ElfArcher : Character
+    public class SG2ElfPriestess : Character
     {
-        public A1ElfArcher()
+        public SG2ElfPriestess()
         {
-            Name = "A1 - Elf Archer";
-            Health = 15;
-            Actions = 4;
-            Might = 5;
-            Accuracy = 5;
+            Name = "SG2 - Elf Priestess";
+            Health = 14;
+            Actions = 3;
+            Might = 6;
             Agility = 12;
-            Resilience = 0;
+            Resilience = 1;
         }
 
         public override double Fight(Character opponant)
         {
             var damageCaused = 0;
-            var mageHunterDamage = (opponant.Magic > 0) ? 2 : 0;
-            var aimingBonus = 1;
 
             var actionsRemaining = Actions;
             while (actionsRemaining > 0)
@@ -33,9 +30,9 @@ namespace Ferrous.JudgementFightSimulator.Characters
                 actionsRemaining--;
 
                 damageCaused += Rules.CalculateAttackDamage(
-                    Accuracy + aimingBonus - opponant.AccuracyDefence,
+                    Might,
                     opponant,
-                    DiceRoller.Roll(DiceShape.D4) + mageHunterDamage,
+                    DiceRoller.Roll(DiceShape.D6),
                     1,
                     2);
             }
