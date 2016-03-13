@@ -33,7 +33,7 @@ namespace Ferrous.JudgementFightSimulator.Characters
                 var chargeBonus = 0;
                 if (shouldCharge && actionsRemaining == Actions)
                 {
-                    rage += 1;
+                    //rage += 1;
                     opponant.ApplyEffect(Effect.Stun);
                     chargeBonus = 2;
                     actionsRemaining--;

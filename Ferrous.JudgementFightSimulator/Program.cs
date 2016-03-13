@@ -19,6 +19,7 @@ namespace Ferrous.JudgementFightSimulator
             using (XmlWriter writer = XmlWriter.Create(@"D:\Judgement.xml"))
             {
                 writer.WriteStartDocument();
+                writer.WriteProcessingInstruction("xml-stylesheet", @"type=""text/xsl"" href=""JudgementStyle.xsl""");
                 writer.WriteStartElement("Results");
                 writer.WriteAttributeString("Date", DateTime.Now.ToString());
 

@@ -13,7 +13,7 @@ namespace Ferrous.JudgementFightSimulator
     {
         public static AttackResult CalculateAttackRoll(int attackerAbility, Character target)
         {
-            var hits = DiceRoller.RollAtLeast(DiceShape.D10, target.Agility - attackerAbility, 3);
+            var hits = DiceRoller.RollAtLeast(DiceShape.D10, Math.Max(target.Agility - attackerAbility, 2), 3);
             return (AttackResult)Math.Max(hits - target.HitDefence, 0);
         }
 

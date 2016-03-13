@@ -16,7 +16,7 @@ namespace Ferrous.JudgementFightSimulator.Characters
             Health = 15;
             Actions = 4;
             Might = 5;
-            Accuracy = 5;
+            Accuracy = 6;
             Agility = 12;
             Resilience = 0;
         }

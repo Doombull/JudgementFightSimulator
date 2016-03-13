@@ -35,7 +35,7 @@ namespace Ferrous.JudgementFightSimulator.Characters
                 if (attack != AttackResult.Miss)
                     opponant.ApplyEffect(Effect.Poison);
 
-                damageCaused += Rules.CalculateAttackDamage(attack, opponant.Resilience, DiceRoller.Roll(DiceShape.D4, 2), 1, 2);
+                damageCaused += Rules.CalculateAttackDamage(attack, opponant.Resilience, DiceRoller.Roll(DiceShape.D4, 1), 1, 2);
             }
 
             if (opponant.Effects.Contains(Effect.Poison))

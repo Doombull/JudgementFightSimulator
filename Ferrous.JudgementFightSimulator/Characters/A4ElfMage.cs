@@ -30,12 +30,30 @@ namespace Ferrous.JudgementFightSimulator.Characters
             {
                 actionsRemaining--;
 
-                damageCaused += Rules.CalculateAttackDamage(
-                    Magic,
-                    opponant,
-                    DiceRoller.Roll(DiceShape.D6) + 1,
-                    1,
-                    2);
+                //damageCaused += Rules.CalculateAttackDamage(
+                //    Magic,
+                //    opponant,
+                //    DiceRoller.Roll(DiceShape.D6) + 0,
+                //    1,
+                //    2);
+
+
+                var attackroll = Rules.CalculateAttackRoll(Magic, opponant);
+                switch (attackroll)
+                {
+                    case AttackResult.Glancing:
+                        damageCaused += DiceRoller.Roll(DiceShape.D6);
+                        break;
+
+                    case AttackResult.Solid:
+                        damageCaused += DiceRoller.Roll(DiceShape.D6) + 1;
+                        break;
+
+                    case AttackResult.Critical:
+                        damageCaused += DiceRoller.Roll(DiceShape.D6) + 2;
+                        break;
+                }
+
             }
 
             damageCaused += DiceRoller.Roll(DiceShape.D6, opponant.Resilience);
