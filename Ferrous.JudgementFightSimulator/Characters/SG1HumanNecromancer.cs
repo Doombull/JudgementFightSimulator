@@ -13,32 +13,54 @@ namespace Ferrous.JudgementFightSimulator.Characters
         public SG1HumanNecromancer()
         {
             Name = "SG1 - Human Necromancer";
-            Health = 12;
+            Health = 14;
             Actions = 3;
             Might = 4;
             Magic = 5;
-            Agility = 12;
+            Agility = 13;
             Resilience = 0;
         }
 
         public override double Fight(Character opponant)
         {
             var damageCaused = 0;
-
             var actionsRemaining = Actions;
+
             while (actionsRemaining > 0)
             {
-                actionsRemaining--;
+				actionsRemaining--;
 
-                damageCaused += Rules.CalculateAttackDamage(
-                    Magic,
-                    opponant,
-                    DiceRoller.Roll(DiceShape.D4),
-                    1,
-                    2);
-            }
+				var hit = opponant.TakeHit(AttackType.Magic, Magic);
 
-            return (double)damageCaused / opponant.Health * 100;
+				var damageSpread = new DamageExpression[4] {
+					new DamageExpression(0),
+					new DamageExpression(2),
+					new DamageExpression(1, DiceShape.D4, 1),
+					new DamageExpression(1, DiceShape.D4, 3)
+				};
+
+				damageCaused += opponant.TakeDamage(AttackType.Magic, hit, damageSpread);
+			}
+
+			actionsRemaining = 2;
+
+			while (actionsRemaining > 0)
+			{
+				actionsRemaining--;
+
+				var hit = opponant.TakeHit(AttackType.Melee, Might);
+
+				var damageSpread = new DamageExpression[4] {
+					new DamageExpression(0),
+					new DamageExpression(1),
+					new DamageExpression(2),
+					new DamageExpression(3)
+				};
+
+				damageCaused += opponant.TakeDamage(AttackType.Melee, hit, damageSpread);
+			}
+
+			return (double)damageCaused / opponant.Health * 100;
         }
     }
 }

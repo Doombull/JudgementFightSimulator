@@ -15,8 +15,8 @@ namespace Ferrous.JudgementFightSimulator.Characters
             Name = "A2 - Human Barbarian";
             Health = 16;
             Actions = 3;
-            Might = 7;
-            Agility = 11;
+            Might = 8;
+            Agility = 12;
             Resilience = 0;
         }
 
@@ -30,22 +30,28 @@ namespace Ferrous.JudgementFightSimulator.Characters
 
             while (actionsRemaining > 0)
             {
-                var chargeBonus = 0;
+                bool charged = false;
                 if (shouldCharge && actionsRemaining == Actions)
                 {
-                    //rage += 1;
-                    opponant.ApplyEffect(Effect.Stun);
-                    chargeBonus = 2;
+					charged = true;
+					rage += 1;
                     actionsRemaining--;
                 }
 
                 actionsRemaining--;
 
-                var attack = Rules.CalculateAttackRoll(Might + chargeBonus, opponant);
-                if (attack == AttackResult.Critical)
-                    rage += 1;
+				var hit = opponant.TakeHit(AttackType.Melee, Might + (charged ? Rules.ChargeBonus : 0));
+				if (hit == AttackResult.Critical)
+					rage += 1;
 
-                damageCaused += Rules.CalculateAttackDamage(attack, opponant.Resilience, DiceRoller.Roll(DiceShape.D6), 1, 2);
+				var damageSpread = new DamageExpression[4] {
+					new DamageExpression(0),
+					new DamageExpression(2),
+					new DamageExpression(1, DiceShape.D6, 1),
+					new DamageExpression(1, DiceShape.D6, 2)
+				};
+
+				damageCaused += opponant.TakeDamage(AttackType.Melee, hit, damageSpread);
             }
 
             damageCaused += DiceRoller.Roll(DiceShape.D6, rage);

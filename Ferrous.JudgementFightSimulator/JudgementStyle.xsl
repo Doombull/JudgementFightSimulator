@@ -30,6 +30,9 @@
 				border: 1px Solid Goldenrod;	
 				background-color: Gold;
 			}
+			td.LowDamage {
+				border: 1px Solid Goldenrod;
+			}
 		</style>
 	</head>
 	<body>
@@ -64,6 +67,9 @@
 									</xsl:when>
 									<xsl:when test=". > 66">
 										MidDamage
+									</xsl:when>
+									<xsl:when test=". > 50">
+										LowDamage
 									</xsl:when>
 								</xsl:choose>
 							</xsl:attribute>

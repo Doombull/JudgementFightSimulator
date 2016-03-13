@@ -16,28 +16,33 @@ namespace Ferrous.JudgementFightSimulator.Characters
             Health = 15;
             Actions = 4;
             Might = 5;
-            Accuracy = 6;
-            Agility = 12;
+            Accuracy = 5;
+            Agility = 13;
             Resilience = 0;
         }
 
         public override double Fight(Character opponant)
         {
-            var damageCaused = 0;
-            var mageHunterDamage = (opponant.Magic > 0) ? 2 : 0;
-            var aimingBonus = 1;
+            var mageHunterDamage = (opponant.Magic > 0) ? 1 : 0;
+            var birdBonus = 1;
 
-            var actionsRemaining = Actions;
+			var damageCaused = 0;
+			var actionsRemaining = Actions;
+
             while (actionsRemaining > 0)
             {
                 actionsRemaining--;
 
-                damageCaused += Rules.CalculateAttackDamage(
-                    Accuracy + aimingBonus - opponant.AccuracyDefence,
-                    opponant,
-                    DiceRoller.Roll(DiceShape.D4) + mageHunterDamage,
-                    1,
-                    2);
+				var hit = opponant.TakeHit(AttackType.Ranged, Accuracy + Rules.AimingBonus + birdBonus);
+
+				var damageSpread = new DamageExpression[4] {
+					new DamageExpression(0),
+					new DamageExpression(2 + mageHunterDamage),
+					new DamageExpression(1, DiceShape.D4, 1 + mageHunterDamage),
+					new DamageExpression(1, DiceShape.D4, 3 + mageHunterDamage)
+				};
+
+				damageCaused += opponant.TakeDamage(AttackType.Ranged, hit, damageSpread);
             }
 
             return (double)damageCaused / opponant.Health * 100;

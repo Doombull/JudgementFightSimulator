@@ -15,9 +15,8 @@ namespace Ferrous.JudgementFightSimulator.Characters
             Name = "A4 - Elf Mage";
             Health = 13;
             Actions = 3;
-            Might = 2;
             Magic = 7;
-            Agility = 13;
+            Agility = 14;
             Resilience = 0;
         }
 
@@ -30,31 +29,17 @@ namespace Ferrous.JudgementFightSimulator.Characters
             {
                 actionsRemaining--;
 
-                //damageCaused += Rules.CalculateAttackDamage(
-                //    Magic,
-                //    opponant,
-                //    DiceRoller.Roll(DiceShape.D6) + 0,
-                //    1,
-                //    2);
+				var hit = opponant.TakeHit(AttackType.Magic, Magic);
 
+				var damageSpread = new DamageExpression[4] {
+					new DamageExpression(0),
+					new DamageExpression(2),
+					new DamageExpression(1, DiceShape.D6, 1),
+					new DamageExpression(1, DiceShape.D6, 2)
+				};
 
-                var attackroll = Rules.CalculateAttackRoll(Magic, opponant);
-                switch (attackroll)
-                {
-                    case AttackResult.Glancing:
-                        damageCaused += DiceRoller.Roll(DiceShape.D6);
-                        break;
-
-                    case AttackResult.Solid:
-                        damageCaused += DiceRoller.Roll(DiceShape.D6) + 1;
-                        break;
-
-                    case AttackResult.Critical:
-                        damageCaused += DiceRoller.Roll(DiceShape.D6) + 2;
-                        break;
-                }
-
-            }
+				damageCaused += opponant.TakeDamage(AttackType.Magic, hit, damageSpread, true);
+			}
 
             damageCaused += DiceRoller.Roll(DiceShape.D6, opponant.Resilience);
 

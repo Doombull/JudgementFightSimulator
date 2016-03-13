@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttackResult.cs" />
     <Compile Include="Characters\A1ElfArcher.cs" />
     <Compile Include="Characters\A2HumanBarbarian.cs" />
     <Compile Include="Characters\A3Minotaur.cs" />
@@ -58,7 +57,7 @@
     <Compile Include="Characters\SG3DwarfDruid.cs" />
     <Compile Include="Characters\SU1OrcWitchDoctor.cs" />
     <Compile Include="Characters\SU2HumanTribalElder.cs" />
-    <Compile Include="Effect.cs" />
+    <Compile Include="DamageExpression.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules.cs" />

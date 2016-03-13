@@ -15,42 +15,31 @@ namespace Ferrous.JudgementFightSimulator.Characters
             Name = "A3 - Minotaur";
             Health = 20;
             Actions = 3;
-            Might = 7;
-            Agility = 10;
-            Resilience = 1;
+            Might = 5;
+            Agility = 11;
+            Resilience = 0;
         }
 
         public override double Fight(Character opponant)
         {
             var damageCaused = 0;
-
             var actionsRemaining = Actions;
+
             while (actionsRemaining > 0)
             {
-                if (actionsRemaining > 1)
-                {
+                actionsRemaining--;
 
-                    actionsRemaining -= 2;
+				var hit = opponant.TakeHit(AttackType.Melee, Might);
 
-                    damageCaused += Rules.CalculateAttackDamage(
-                        Might,
-                        opponant,
-                        DiceRoller.Roll(DiceShape.D6, 2) + 1,
-                        1,
-                        2);
-                }
-                else
-                {
-                    actionsRemaining--;
+				var damageSpread = new DamageExpression[4] {
+					new DamageExpression(0),
+					new DamageExpression(3),
+					new DamageExpression(1, DiceShape.D8, 2),
+					new DamageExpression(1, DiceShape.D8, 4)
+				};
 
-                    damageCaused += Rules.CalculateAttackDamage(
-                        Might,
-                        opponant,
-                        DiceRoller.Roll(DiceShape.D8) + 1,
-                        1,
-                        2);
-                }
-            }
+				damageCaused += opponant.TakeDamage(AttackType.Melee, hit, damageSpread);
+			}
 
             return (double)damageCaused / opponant.Health * 100;
         }

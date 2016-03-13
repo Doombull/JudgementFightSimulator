@@ -13,10 +13,10 @@ namespace Ferrous.JudgementFightSimulator.Characters
         public A5OrcRogue()
         {
             Name = "A5 - Orc Rogue";
-            Health = 16;
+            Health = 14;
             Actions = 3;
             Might = 5;
-            Agility = 13;
+            Agility = 14;
             Resilience = 0;
 
             AccuracyDefence = 1;
@@ -25,17 +25,24 @@ namespace Ferrous.JudgementFightSimulator.Characters
         public override double Fight(Character opponant)
         {
             var damageCaused = 0;
-
             var actionsRemaining = Actions;
+
             while (actionsRemaining > 0)
             {
-                actionsRemaining--;
+				actionsRemaining--;
 
-                var attack = Rules.CalculateAttackRoll(Might, opponant);
-                if (attack != AttackResult.Miss)
-                    opponant.ApplyEffect(Effect.Poison);
+				var hit = opponant.TakeHit(AttackType.Melee, Might);
+				if (hit != AttackResult.Miss)
+					opponant.ApplyEffect(Effect.Poison);
 
-                damageCaused += Rules.CalculateAttackDamage(attack, opponant.Resilience, DiceRoller.Roll(DiceShape.D4, 1), 1, 2);
+				var damageSpread = new DamageExpression[4] {
+					new DamageExpression(0),
+					new DamageExpression(1),
+					new DamageExpression(1, DiceShape.D4),
+					new DamageExpression(1, DiceShape.D4, 2)
+				};
+
+				damageCaused += opponant.TakeDamage(AttackType.Melee, hit, damageSpread);
             }
 
             if (opponant.Effects.Contains(Effect.Poison))

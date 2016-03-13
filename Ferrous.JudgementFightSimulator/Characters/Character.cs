@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Ferrous.Dice;
+
 namespace Ferrous.JudgementFightSimulator.Characters
 {
     public abstract class Character
@@ -18,7 +20,6 @@ namespace Ferrous.JudgementFightSimulator.Characters
         public int Resilience { get; set; }
 
         public int AccuracyDefence { get; set; }
-        public int HitDefence { get; set; }
 
         public List<Effect> Effects = new List<Effect>();
 
@@ -33,15 +34,32 @@ namespace Ferrous.JudgementFightSimulator.Characters
 
             switch (effect)
             {
-                case Effect.Blind:
-                case Effect.Stun:
-                    Agility -= 2;
-                    break;
-
                 case Effect.Poison:
-                    Agility -= 1;
-                    break;
+                    Might -= 2;
+					Magic -= 2;
+					Accuracy -= 2;
+					Agility -= 2;
+					break;
             }
         }
-    }
+
+		public virtual AttackResult TakeHit(AttackType attackType, int attackerAbility)
+		{
+			if (attackType == AttackType.Ranged)
+				attackerAbility -= AccuracyDefence;
+
+			var hits = DiceRoller.RollAtLeast(DiceShape.D10, Math.Max(Agility - attackerAbility, 2), 3);
+			return (AttackResult)hits;
+		}
+
+		public virtual int TakeDamage(AttackType attackType, AttackResult severity, DamageExpression[] damageSpread, bool ignoreResilience = false)
+		{
+			var damage = damageSpread[(int)severity].GetDamage();
+
+			if (!ignoreResilience)
+				damage = Math.Max(damage - Resilience, 0);
+
+			return damage;
+		}
+	}
 }

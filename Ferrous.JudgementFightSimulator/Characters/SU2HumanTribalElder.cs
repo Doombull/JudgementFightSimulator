@@ -16,7 +16,8 @@ namespace Ferrous.JudgementFightSimulator.Characters
             Health = 16;
             Actions = 3;
             Might = 4;
-            Agility = 12;
+			Magic = 6;
+			Agility = 13;
             Resilience = 0;
         }
 
@@ -27,15 +28,19 @@ namespace Ferrous.JudgementFightSimulator.Characters
             var actionsRemaining = Actions;
             while (actionsRemaining > 0)
             {
-                actionsRemaining--;
+				actionsRemaining--;
 
-                damageCaused += Rules.CalculateAttackDamage(
-                    Might,
-                    opponant,
-                    DiceRoller.Roll(DiceShape.D6),
-                    1,
-                    2);
-            }
+				var hit = opponant.TakeHit(AttackType.Melee, Might);
+
+				var damageSpread = new DamageExpression[4] {
+					new DamageExpression(0),
+					new DamageExpression(2),
+					new DamageExpression(1, DiceShape.D6, 1),
+					new DamageExpression(1, DiceShape.D6, 2)
+				};
+
+				damageCaused += opponant.TakeDamage(AttackType.Melee, hit, damageSpread);
+			}
 
             return (double)damageCaused / opponant.Health * 100;
         }
